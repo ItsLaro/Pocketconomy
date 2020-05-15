@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:100,300,400,600" rel="stylesheet" type="text/css">
+    <link href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css">
+    <link type="text/css" rel="stylesheet" href="style.css">
+    <title>Pocketonomy</title>
+</head>
+<body>
+    <div class="banner">
+        <div class="budget">
+            <h1 class="budget-title">Available Budget in %Month%:</h1>
+            <h1 class="budget-total">0.00</h1>
+
+            <div class="budget-income">
+                <div class="income-left">Income</div>
+                <div class="income-right">
+                    <div class="income-value">-----</div>
+                    <div class="total-percent income-percent"> &nbsp;</div>
+                </div>
+            </div>
+
+            <div class="budget-expenses">
+                <div class="expenses-left">Expenses</div>
+                <div class="expenses-right">
+                    <div class="expenses-value">-----</div>
+                    <div class="expenses-percent">--%</div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="input-bar">
+        <select class="op-menu" name="operation">
+            <option class="op-menu+" value="inc">+</option>
+            <option class="op-menu-" value="exp">-</option>
+        </select>
+        <input type="text" class="input-description" placeholder="Add description">
+        <input type="number" class="input-value" placeholder="Value">
+        <div class="btn-container"> 
+            <button class="submit-btn"><i class="ion-ios-checkmark-outline"></i></button>
+        </div>
+    </div>
+
+    <div class="list-container">
+
+        <div class="income-list-container">
+            <h2 class="income-list-title">Income</h2>
+            <ul class="income-list"> 
+
+                <!--li class="income-list-item" id="inc-0" style="display:none">
+                        <h3 class=list-element-title>List Item #1</h3>
+                        <button class="income-del-btn del-btn">
+                            <i class="ion-ios-close-outline" id="btn-inc-0"></i>
+                        </button>
+                        <i class=list-element-value>+ %value%</i>
+                        
+                </li>
+
+                <li class="income-list-item">
+                        <h3 class=list-element-title>List Item #2</h3>
+                        <button class="income-del-btn del-btn">
+                            <i class="ion-ios-close-outline"></i>
+                        </button>
+                        <i class=list-element-value>+ %value%</i>
+                        
+                </li>
+
+                <li class="income-list-item">
+                        <h3 class=list-element-title>List Item #3</h3>
+                        <button class="income-del-btn del-btn">
+                            <i class="ion-ios-close-outline"></i>
+                        </button>
+                        <i class=list-element-value>+ %value%</i>
+
+                </li-->
+
+            </ul>
+
+        </div>
+
+        <div class="expenses-list-container">
+            <h2 class="expenses-list-title">Expenses</h2>
+            <ul class="expenses-list"> 
+
+                <!--li class="expenses-list-item">
+                        <h3 class=list-element-title>List Item #1</h3>
+                        <button class="expenses-del-btn del-btn">
+                            <i class="ion-ios-close-outline"></i>
+                        </button>
+                        <i class=list-element-percent>p%</i>
+                        <i class=list-element-value>- %value%</i>
+                        
+                </li>
+
+                <li class="expenses-list-item">
+                        <h3 class=list-element-title>List Item #2</h3>
+                        <button class="expenses-del-btn del-btn">
+                            <i class="ion-ios-close-outline"></i>
+                        </button>
+                        <i class=list-element-percent>p%</i>
+                        <i class=list-element-value>- %value%</i>
+                        
+                </li-->
+
+            </ul>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
