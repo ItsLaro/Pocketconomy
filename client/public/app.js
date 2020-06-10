@@ -259,6 +259,24 @@ UI_Module = (function(){
 
 })();
 
+DB_Module = (function(){
+
+
+    return {
+
+        restoreSession : function (data) {
+            /*
+            Restores items from DB and displays them on UI. 
+            */
+            data.forEach( function(elem){
+                UI_Module.restoreItem(elem.type, elem.description, elem.value); 
+                console.log(elem.type);
+            })
+        }
+        
+    }
+})();
+
 Driver_Module = (function(){
 
     //Gets Month for Title
@@ -268,18 +286,8 @@ Driver_Module = (function(){
 
     fetch('http://localhost:3000/db')
         .then(response => response.json())
-        .then(data => restoreSession(data))
+        .then(data => DB_Module.restoreSession(data))
         .catch(error => console.log("Error in loading from db: " + error));
-
-    restoreSession = function(data){
-        /*
-        Restores items from DB and displays them on UI. 
-        */
-        data.forEach( function(elem){
-            UI_Module.restoreItem(elem.type, elem.description, elem.value); 
-            console.log(elem.type);
-        }
-    )};
 
     //EVENT LISTENERS:
 
