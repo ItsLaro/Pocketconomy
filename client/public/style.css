@@ -326,3 +326,16 @@ body{
 
 .income-del-btn{color:  rgb(0, 130, 170);}
 .expenses-del-btn{color:  rgb(179, 81, 0);}
+
+/* FOOTER */
+.signature{
+    color: rgb(255, 255, 255);
+    background-color: rgba(0, 130, 170, 0.75);
+    box-shadow: inset;
+    font-size: 10px;
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    padding:10px 10px;
+    margin-right: 20px;
+}
