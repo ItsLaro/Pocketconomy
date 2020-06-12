@@ -38,8 +38,8 @@
             <option class="op-menu+" value="inc">+</option>
             <option class="op-menu-" value="exp">-</option>
         </select>
-        <input type="text" class="input-description" placeholder="Add description">
-        <input type="number" class="input-value" placeholder="Value">
+        <input type="text" class="input-description" name ="description" placeholder="Add description"/>
+        <input type="number" class="input-value" name ="value" placeholder="Value"/>
         <div class="btn-container"> 
             <button class="submit-btn"><i class="ion-ios-checkmark-outline"></i></button>
         </div>
@@ -53,9 +53,11 @@
 
                 <!--li class="income-list-item" id="inc-0" style="display:none">
                         <h3 class=list-element-title>List Item #1</h3>
-                        <button class="income-del-btn del-btn">
-                            <i class="ion-ios-close-outline" id="btn-inc-0"></i>
-                        </button>
+                        <form action="/api/v1/db" method="delete"> !!!!!!!!!!!!
+                            <button class="income-del-btn del-btn">
+                                <i class="ion-ios-close-outline" id="btn-inc-0"></i>
+                            </button>
+                        </form>
                         <i class=list-element-value>+ %value%</i>
                         
                 </li>

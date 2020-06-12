@@ -44,11 +44,7 @@ Data_Module = (function(){
     }
 
     return {
-        addItem: function(type, description, value){
-
-            //ID management
-            id = this.newID();    
-
+        addItem: function(id, type, description, value){
             if(type === "inc"){
                 //Item creation and addition
                 var numValue = parseFloat(value); //Parses numeric value
@@ -100,6 +96,9 @@ Data_Module = (function(){
         newID: function(){
             data.currentID += 1; //ID initialized as -1, so starts at 0
             return data.currentID;
+        },
+        restoreID : function(latestID) {
+            data.currentID = latestID;
         },
         getDataTotals: function(){
             var budget = data.totals.inc - data.totals.exp
@@ -193,7 +192,7 @@ UI_Module = (function(){
     
 
     return{
-        submitItem: function(){
+        submitItem: function(id){
             
             //Getting values from form
             var itemType = document.querySelector('.op-menu').value;
@@ -204,8 +203,9 @@ UI_Module = (function(){
                 console.log("Unable to submit w/ empty fields.")
             }
             else{
-                //Add item
-                var newItem = Data_Module.addItem(itemType, itemDescription, itemValue)
+
+                //Add item to list
+                var newItem = Data_Module.addItem(id, itemType, itemDescription, itemValue)
 
                 //Updating UI
                 appendHTML(newItem);
@@ -233,9 +233,9 @@ UI_Module = (function(){
             updateBudget() 
             updatePercentages(); 
         },
-        restoreItem: function(itemType, itemDescription, itemValue){
+        restoreItem: function(itemID, itemType, itemDescription, itemValue){
             //Add item
-            var newItem = Data_Module.addItem(itemType, itemDescription, itemValue)
+            var newItem = Data_Module.addItem(itemID, itemType, itemDescription, itemValue)
 
             //Updating UI
             appendHTML(newItem);
@@ -261,17 +261,58 @@ UI_Module = (function(){
 
 DB_Module = (function(){
 
+    let url = 'http://localhost:3000/api/v1/db'
 
     return {
-
-        restoreSession : function (data) {
+        restoreSession : function (existingData) {
             /*
             Restores items from DB and displays them on UI. 
             */
-            data.forEach( function(elem){
-                UI_Module.restoreItem(elem.type, elem.description, elem.value); 
-                console.log(elem.type);
+            existingData.forEach(function(elem){
+
+                //Assuming DB reads back data sorted by order of ID, last element should be greates (and therefore current) ID. 
+                Data_Module.restoreID(elem._id) 
+
+                //MIGHT BE _id instead of id
+                UI_Module.restoreItem(elem._id, elem.type, elem.description, elem.value); 
+
+                
             })
+        },
+        postItemDB : async function(id) {
+
+            
+
+            //Getting values from form into payload
+            let payload = {};
+            payload.id = id;
+            payload.type = document.querySelector('.op-menu').value;
+            payload.description = document.querySelector('.input-description').value;
+            payload.value = document.querySelector('.input-value').value;
+            console.log(payload);
+            const response = await fetch(url, {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload) // body data type must match "Content-Type" header
+            });
+
+            return response; // parses JSON response into native JavaScript objects
+        
+        },
+        deleteItemDB : async function(ID){
+            var elemID = Number(ID.substring(8));
+
+            const response = await fetch(url, {
+                method: 'DELETE', // *GET, POST, PUT, DELETE, etc.
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({id : elemID}) // body data type must match "Content-Type" header
+            });
+
+            return response; // parses JSON response into native JavaScript objects
         }
         
     }
@@ -284,35 +325,59 @@ Driver_Module = (function(){
 
     //RESTORE FROM DB:
 
-    fetch('http://localhost:3000/db')
-        .then(response => response.json())
-        .then(data => DB_Module.restoreSession(data))
-        .catch(error => console.log("Error in loading from db: " + error));
+    fetch('http://localhost:3000/api/v1/db')
+    .then(response => response.json())
+    .then(data => DB_Module.restoreSession(data))
+    .catch(error => console.log("Error in loading from db: " + error));
 
     //EVENT LISTENERS:
 
     //Clicking submit button
-    document.querySelector('.submit-btn').addEventListener('click', UI_Module.submitItem); 
+    document.querySelector('.submit-btn').addEventListener('click', function(){
+        
+        id = Data_Module.newID();
+        console.log(id)
+        
+        DB_Module.postItemDB(id)
+        .then(UI_Module.submitItem()) //update UI if promise succeeds
+        .catch((err) => console.log("POST Error: " + err));
+    }); 
 
     //Pressing Enter from Description bar
-    document.querySelector('.input-description').addEventListener('keyup', function(e){ //Pressing Enter
+    document.querySelector('.input-description').addEventListener('keyup', function(e){
+        
         if (e.keyCode === 13){
-            UI_Module.submitItem();
+            
+            id = Data_Module.newID();
+            console.log(id)
+
+            DB_Module.postItemDB(id)
+            .then(UI_Module.submitItem()) //update UI if promise succeeds
+            .catch((err) => console.log("POST Error: " + err));
         }
     });
 
     //Pressing Enter from Value bar
     document.querySelector('.input-value').addEventListener('keyup', function(e){
+        
         if (e.keyCode === 13){
-            UI_Module.submitItem();
+            
+            id = Data_Module.newID();
+            console.log(id)
+
+            DB_Module.postItemDB(id)
+            .then(UI_Module.submitItem(id)) //update UI if promise succeeds
+            .catch((err) => console.log("POST Error: " + err));
         }
     });
 
     //Clicking delete from any item entry
     document.querySelector('.list-container').addEventListener('click', function(e){
-        UI_Module.removeItem((e.target.id));
+        DB_Module.deleteItemDB(e.target.id) 
+        .then(UI_Module.removeItem(e.target.id)) //update UI if promise succeeds
+        .catch((err) => console.log("DELETE Error: " + err));
+        
     });
-    console.log(document);
 
 }());
 
