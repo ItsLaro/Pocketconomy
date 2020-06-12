@@ -1,13 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
 import path from 'path';
-import dbRoutes from "./routes/db.js";
+import itemsRoutes from "./routes/items.js";
 
 const app = express();
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use('/api/v1', dbRoutes); //imports db routes through specified route prefix
+app.use('/api/v1', itemsRoutes); //imports db routes through specified route prefix
 app.use(express.static('../client/public')); //middleware to serve static files on specified dir (public)
 
 
