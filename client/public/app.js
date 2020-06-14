@@ -15,12 +15,17 @@ Driver_Module = (function(){
     //Clicking submit button
     document.querySelector('.submit-btn').addEventListener('click', function(){
         
-        id = Data_Module.newID();
+        id = Data_Module.getID();
         console.log(id)
         
         Request_Module.postItemDB(id)
-        .then(UI_Module.submitItem()) //update UI if promise succeeds
-        .catch((err) => console.log("POST Error: " + err));
+        .then(() => {
+            UI_Module.submitItem();
+            Data_Module.nextID();
+        }) //update UI if promise succeeds
+        .catch((err) => {
+            console.log("POST Error: " + err);
+        });
     }); 
 
     //Pressing Enter from Description bar
@@ -28,28 +33,40 @@ Driver_Module = (function(){
         
         if (e.keyCode === 13){
             
-            id = Data_Module.newID();
+            id = Data_Module.getID();
             console.log(id)
-
+            
             Request_Module.postItemDB(id)
-            .then(UI_Module.submitItem()) //update UI if promise succeeds
-            .catch((err) => console.log("POST Error: " + err));
+            .then(() => {
+                UI_Module.submitItem();
+                Data_Module.nextID();
+            }) //update UI if promise succeeds
+            .catch((err) => {
+                console.log("POST Error: " + err);
+            });
         }
-    });
+    });  
 
     //Pressing Enter from Value bar
     document.querySelector('.input-value').addEventListener('keyup', function(e){
         
         if (e.keyCode === 13){
             
-            id = Data_Module.newID();
+            id = Data_Module.getID();
             console.log(id)
-
+            
             Request_Module.postItemDB(id)
-            .then(UI_Module.submitItem(id)) //update UI if promise succeeds
-            .catch((err) => console.log("POST Error: " + err));
+            .then(() => {
+                UI_Module.submitItem();
+                Data_Module.nextID();
+            }) //update UI if promise succeeds
+            .catch((err) => {
+                console.log("POST Error: " + err);
+            });
         }
-    });
+    });  
+
+         
 
     //Clicking delete from any item entry
     document.querySelector('.list-container').addEventListener('click', function(e){

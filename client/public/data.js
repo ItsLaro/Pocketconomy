@@ -9,7 +9,7 @@ Data_Module = (function(){
             inc: 0,
             exp: 0
         },
-        currentID: -1
+        currentID: 0
     };
 
     var Income = function(id, description, value) {
@@ -86,12 +86,14 @@ Data_Module = (function(){
                 }
             })
         },
-        newID: function(){
-            data.currentID += 1; //ID initialized as -1, so starts at 0
+        getID: function(){
             return data.currentID;
         },
+        nextID: function(){
+            data.currentID += 1;
+        },
         restoreID : function(latestID) {
-            data.currentID = latestID;
+            data.currentID = latestID + 1;
         },
         getDataTotals: function(){
             var budget = data.totals.inc - data.totals.exp
