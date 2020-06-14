@@ -18,6 +18,54 @@ body{
 }
 
 /* TOP */
+
+/* Main Bar*/
+.main-bar{
+    border: 1px solid #cacaca;
+    background-color: #ffffff;
+    height: 50px;
+    font-size: 32px;
+    text-align: right;
+    padding: 5px 20px 0px 10px;
+    
+}
+
+.profile-container{
+    position: relative;
+    display: inline-block;
+    width: 200px;
+    right: 0px;
+    text-align: right;
+    vertical-align: middle;
+}
+
+.profile-pic {
+    border-radius: 50%;
+    height: 30px;
+    cursor: pointer;
+}
+
+.signout-btn {
+    padding: 10px;
+    bottom: 10px;
+    display: inline-block;
+    text-align: middle;
+    transition: 0.5s;
+    transition-delay: 0.25s;
+    color: #555;
+    font-size: 14px;
+    text-decoration:none;
+}
+
+/*transitions*/
+
+.profile-container:hover .signout-btn {display: inline-block;}
+
+.profile-container:hover .signout-btn{
+    transform: translateX(-50px);
+}
+
+/* Banner */
 .banner{
     color:white;
     height: 45vh;
@@ -339,3 +387,7 @@ body{
     padding:10px 10px;
     margin-right: 20px;
 }
+.repo-hyperlink{text-decoration:none;}
+.repo-hyperlink:visited { text-decoration: none; color:rgb(255, 255, 255); }
+.repo-hyperlink:hover { text-decoration: none; color:rgb(0, 0, 0); }
+.repo-hyperlink:focus { text-decoration: none; color:yellow; }

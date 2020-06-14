@@ -16,8 +16,13 @@ app.get("/", function(req, res) {
     res.sendFile(absPath);
 });
 
-app.get("/about", function(req, res) {
+app.get("/sign-out", function(req, res) {
+    console.log("RECIEVED");
+    res.redirect('/sign-in');
+});
 
+app.get("/about", function(req, res) {
+    console.log("RECIEVED");
 });
     
 app.listen(3000, function() {
