@@ -17,12 +17,12 @@ app.get("/", function(req, res) {
 });
 
 app.get("/sign-out", function(req, res) {
-    console.log("RECIEVED");
+    //TODO
     res.redirect('/sign-in');
 });
 
 app.get("/about", function(req, res) {
-    console.log("RECIEVED");
+    
 });
     
 app.listen(3000, function() {

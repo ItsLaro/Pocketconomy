@@ -28,15 +28,21 @@ Request_Module = (function(){
             payload.description = document.querySelector('.input-description').value;
             payload.value = document.querySelector('.input-value').value;
             console.log(payload);
-            const response = await fetch(url, {
-                method: 'POST', // *GET, POST, PUT, DELETE, etc.
-                headers: {
-                'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(payload) // body data type must match "Content-Type" header
-            });
 
-            return response; // parses JSON response into native JavaScript objects
+            if(payload.description === '' || payload.value === '0'){
+                return Promise.reject(new Error('Empty data fields'))
+            }
+            else{
+                const response = await fetch(url, {
+                    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                    headers: {
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload) // body data type must match "Content-Type" header
+                });
+
+                return response; // parses JSON response into native JavaScript objects
+            }
         
         },
         deleteItemDB : async function(ID){

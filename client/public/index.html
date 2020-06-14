@@ -127,5 +127,31 @@
     <script src="./interface.js"></script>
     <script src="./request.js"></script>
     <script src="./app.js"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-analytics.js"></script>
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyAyYanmzJenu9QcIu2ToxdNDjRKpukfH1Y",
+        authDomain: "pocketconomy.firebaseapp.com",
+        databaseURL: "https://pocketconomy.firebaseio.com",
+        projectId: "pocketconomy",
+        storageBucket: "pocketconomy.appspot.com",
+        messagingSenderId: "644228466444",
+        appId: "1:644228466444:web:0f313f1689b7df1e89ab29",
+        measurementId: "G-27ZWVNGFP2"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+    </script>
+    
 </body>
+
 </html>
