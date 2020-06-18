@@ -10,9 +10,10 @@ mongoose.connect("mongodb://localhost:27017/PocketonomyDB", { useUnifiedTopology
 
 router.get("/db", function(req, res) {
 
-    Item.find({}, "type description value")
+    Item.find({_id: 'your_id'}, "budget") //TODO: Add actual user_id from request's body (once implemented)
         .exec()
         .then((items) => {
+            console.log(items);
             res.send(items);    
         })
         .catch((err) => {
@@ -22,7 +23,8 @@ router.get("/db", function(req, res) {
 
 router.post("/db", function(req, res) {
 
-    /* Creates new Item document from request.
+    /**
+     * Creates new Item document from request.
      * Find user from request on db and attempts to push new item to its 'budget'
      */
 
@@ -35,7 +37,7 @@ router.post("/db", function(req, res) {
     });
 
     User.findAndUpdate(
-        {_id: 'your_id'}, //TODOOOOOOOOOOOOOOOOOOOOOOOO
+        {_id: 'your_id'}, //TODO: Add actual user_id from request's body (once implemented)
         {$push: {budget: newItem}}, 
         {new: true}, 
         (err, result) => {
@@ -53,11 +55,15 @@ router.post("/db", function(req, res) {
 });
 
 router.delete("/db", function(req, res) {
+
+    /**
+     * Find user from request on db and attempts to pull item matching itemID from its 'budget'
+     */
     
     let itemID = req.body.id;  
 
     User.findAndUpdate(
-        {_id: 'your_id'}, //TODOOOOOOOOOOOOOOOOOOOOOOOO
+        {_id: 'your_id'}, //TODO: Add actual user_id from request's body (once implemented)
         {$pull: {budget: {_id: itemID}}},
         (err, result) => {
             if(err){
@@ -71,16 +77,6 @@ router.delete("/db", function(req, res) {
         }
     );
 
-    Item.findByIdAndDelete(itemID, function(err){
-        if(err){
-            console.log("Error: Deleting from DB Failed");
-            console.log(err);
-            res.sendStatus(500);
-        }
-        else{
-            res.sendStatus(200);
-        }
-    });
 });
 
 export default router;
