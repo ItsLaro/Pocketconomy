@@ -1,28 +1,29 @@
-import express from "express";
-import bodyParser from "body-parser";
 import path from 'path';
+import express from "express";
+import ejs from "ejs";
+import bodyParser from "body-parser";
+
 import itemsRoutes from "./routes/items.js";
+import userRoutes from "./routes/users.js";
 
 const app = express();
 
+app.use(express.static('../client/public')); //middleware to serve static files on specified dir (public)
+app.set("view engine", "ejs");
+app.set('views', path.resolve('../client/views'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-app.use('/api/v1', itemsRoutes); //imports db routes through specified route prefix
-app.use(express.static('../client/public')); //middleware to serve static files on specified dir (public)
+app.use('/api/v1', itemsRoutes);
+app.use('/api/v1', userRoutes); 
 
 
 app.get("/", function(req, res) {
-    absPath = path.resolve('../client/public/index.html');
+    res.render("welcome");
+});    
+
+app.get("/budget", function(req, res) {
+    const absPath = path.resolve('../client/public/budget.html');
     res.sendFile(absPath);
-});
-
-app.get("/sign-out", function(req, res) {
-    //TODO
-    res.redirect('/sign-in');
-});
-
-app.get("/about", function(req, res) {
-    
 });
     
 app.listen(3000, function() {
